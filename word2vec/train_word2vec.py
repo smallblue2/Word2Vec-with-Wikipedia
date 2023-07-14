@@ -47,10 +47,10 @@ if __name__ == '__main__':
     model.train(documents, total_examples=len(documents), epochs=15)
 
     # Save the model
-    model.save(os.path.join(ABSOLUTE_PATH, "saved_models/example_model"))
+    model.save(os.path.join(ABSOLUTE_PATH, "saved_models/my_model"))
 
     # Save the vectors
-    model.wv.save(os.path.join(ABSOLUTE_PATH, "saved_vectors/example_default"))
+    model.wv.save(os.path.join(ABSOLUTE_PATH, "saved_vectors/my_vectors"))
 
     # Report that we've finished training
     print("\n FINISHED TRAINING! \n")
