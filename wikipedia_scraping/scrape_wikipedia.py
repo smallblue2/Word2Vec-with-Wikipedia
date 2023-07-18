@@ -5,8 +5,10 @@ import requests
 import re
 import os
 
-# The number of related pages to get from our foundational pages above
-NUM_RELATED_PAGES = 5
+# RELATED PAGES CONFIG
+FIND_RELATED_PAGES = True # Find additional related pages based on the provided
+                          # to increase data size
+NUM_RELATED_PAGES = 5     # Number of related pages to find (Only if FIND_RELATED_PAGES = True)
 
 # The api url for wikipedia
 WIKIPEDIA_API_URL = "https://en.wikipedia.org/w/api.php"
@@ -19,7 +21,6 @@ OUTPUT_FILE_NAME = 'scrape_output.txt'
 
 # File path
 ABS_PATH = f"{os.getcwd()}/"
-
 
 # Script to read foundational wikipedia pages from file of name INPUT_FILE_NAME
 def get_foundation_pages() -> Set[str]:
@@ -86,7 +87,7 @@ if __name__ == "__main__":
 
     # First delete any existing output file
     try:
-        os.remove(f"{ABS_PATH}/{OUTPUT_FILE_NAME}")
+        os.remove(f"{ABS_PATH}/output_data/{OUTPUT_FILE_NAME}")
         print("Deleted already existing output file.\n")
     except FileNotFoundError:
         print("Output file doesn't exist, skipping deletion.\n")
@@ -94,13 +95,14 @@ if __name__ == "__main__":
     # Get foundational pages from INPUT_FILE_NAME, returns a set
     pages_to_scrape = get_foundation_pages()
 
-    # Find all related pages and expand our initial set
-    for page in list(pages_to_scrape): # convert to list here as we cant iterate over a changing set
-            print(f"Getting related pages for {page}")
-            related_pages = get_related_pages(page)
-            pages_to_scrape.update(related_pages)
-            related_output = ", ".join(related_pages)
-            print(f"Found {related_output}\n")
+    # Find all related pages and expand our initial set (if FIND_RELATED_PAGES = True)
+    if (FIND_RELATED_PAGES):
+        for page in list(pages_to_scrape): # convert to list here as we cant iterate over a changing set
+                print(f"Getting related pages for {page}")
+                related_pages = get_related_pages(page)
+                pages_to_scrape.update(related_pages)
+                related_output = ", ".join(related_pages)
+                print(f"Found {related_output}\n")
 
     print("\nFinished getting related pages, now performing scraping...\n")
 
@@ -108,7 +110,7 @@ if __name__ == "__main__":
     NO_PAGES_TO_SCRAPE = len(pages_to_scrape) # purely for letting the user know progress
 
     # Open the output file
-    with open(f"output/{OUTPUT_FILE_NAME}", "a") as f:
+    with open(f"{ABS_PATH}/output_data/{OUTPUT_FILE_NAME}", "a") as f:
         # List to keep track of the number of errors, and which pages caused them
         errors = [0]
         # i is to keep track of which page we're on to display progress
