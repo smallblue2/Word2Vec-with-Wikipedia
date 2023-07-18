@@ -6,7 +6,7 @@ import os
 ABSOLUTE_PATH = f"{os.getcwd()}/"
 
 # The location of our training data RELATIVE to this python file
-TRAINING_DATA = "../wikipedia_scraping/output_data/example_scrape_output.txt"
+TRAINING_DATA = "../wikipedia_scraping/output_data/scrape_output.txt"
 
 # Method to read in our training data
 def read_input(input_file:str) -> Iterator[List[str]]:
