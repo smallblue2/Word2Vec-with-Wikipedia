@@ -11,7 +11,7 @@ It will then branch out and access **five related pages per foundational page** 
 
 This is to allow the user to essentially specify a context area that they can build their vector space from, with the example provided being around the topic of Health, Science and Education.
 
-All gathered pages ar ethen scraped and cleaned for training data and saved to a text file, ready for the word2vec model to be trained on.
+All gathered pages are then scraped and cleaned for training data and saved to a text file, ready for the word2vec model to be trained on.
 
 ## Word2Vec
 All files for Word2Vec are contained within `./word2vec/`.
